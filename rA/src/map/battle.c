@@ -183,7 +183,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 	return bl_list[rnd()%c];
 }
 
-// ƒ_??[ƒW‚Ì’x‰„
+// ï¿½_??[ï¿½Wï¿½Ì’xï¿½ï¿½
 struct delay_damage {
 	struct block_list *src;
 	struct block_list *target;
@@ -355,7 +355,7 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 }
 
 /*==========================================
- * ƒ_??[ƒW??IŒvŽZ
+ * ï¿½_??[ï¿½W??Iï¿½vï¿½Z
  *------------------------------------------*/
 int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int damage,int skill_num,int skill_lv)
 {
@@ -955,7 +955,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 }
 
 /*==========================================
- * HP/SP‹zŽû‚ÌŒvŽZ
+ * HP/SPï¿½zï¿½ï¿½ÌŒvï¿½Z
  *------------------------------------------*/
 static int battle_calc_drain(int damage, int rate, int per)
 {
@@ -974,7 +974,7 @@ static int battle_calc_drain(int damage, int rate, int per)
 }
 
 /*==========================================
- * ?C—ûƒ_??[ƒW
+ * ?Cï¿½ï¿½_??[ï¿½W
  *------------------------------------------*/
 int battle_addmastery(struct map_session_data *sd,struct block_list *target,int dmg,int type)
 {
@@ -2258,7 +2258,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						skillratio += -100 + 15 * 200;
 					RE_LVL_DMOD(100);
 					break;
-				case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield DEF x 10) + (Caster’s VIT x 2)] %
+				case LG_SHIELDSPELL:// [(Casterï¿½s Base Level x 4) + (Shield DEF x 10) + (Casterï¿½s VIT x 2)] %
 					if( sd ) { 
 						struct item_data *shield_data = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
 						skillratio = status_get_lv(src) * 4 + status_get_vit(src) * 2;
@@ -2346,7 +2346,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 200 * skill_lv -100;
 					break;
 				case WM_REVERBERATION_MELEE:
-					// ATK [{(Skill Level x 100) + 300} x Caster’s Base Level / 100]
+					// ATK [{(Skill Level x 100) + 300} x Casterï¿½s Base Level / 100]
 					skillratio += 200 + 100 * pc_checkskill(sd, WM_REVERBERATION);
 					RE_LVL_DMOD(100);
 					break;
@@ -2364,7 +2364,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 400;
 					break;
 				case GN_CART_TORNADO:
-					// ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Caster’s Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
+					// ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Casterï¿½s Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
 					skillratio = 50 * skill_lv;
 					if( sd && sd->cart_weight)
 						 skillratio += sd->cart_weight/10 / (150-sstatus->str) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
@@ -2509,7 +2509,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			// FIX ME: Should Rolling Cutter be affected by EDP?
 				switch(skill_num){
 					case AS_SPLASHER:       case AS_VENOMKNIFE:
-					case AS_GRIMTOOTH:	case GC_ROLLINGCUTTER:
+					case GC_ROLLINGCUTTER:
 					break;
 #ifndef RENEWAL_EDP
 					case ASC_BREAKER:       case ASC_METEORASSAULT: break;
@@ -2518,6 +2518,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					case ASC_BREAKER:
 					case GC_COUNTERSLASH:
 					case GC_CROSSIMPACT:
+					case AS_GRIMTOOTH:
 						ATK_RATE(50); // only modifier is halved but still benefit with the damage bonus
 						break;
 #endif
@@ -3524,8 +3525,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WL_HELLINFERNO:
 						skillratio = 300 * skill_lv;
 						RE_LVL_DMOD(100);	
-						// Shadow: MATK [{( Skill Level x 300 ) x ( Caster’s Base Level / 100 ) x 4/5 }] %
-						// Fire : MATK [{( Skill Level x 300 ) x ( Caster’s Base Level / 100 ) /5 }] %
+						// Shadow: MATK [{( Skill Level x 300 ) x ( Casterï¿½s Base Level / 100 ) x 4/5 }] %
+						// Fire : MATK [{( Skill Level x 300 ) x ( Casterï¿½s Base Level / 100 ) /5 }] %
 						if( mflag&ELE_DARK ){ skillratio *= 4; s_ele = ELE_DARK; }
 						skillratio /= 5;
 						break;
@@ -3569,7 +3570,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio = (skillratio + 200) * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
-					case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield MDEF x 100) + (Caster’s INT x 2)] %
+					case LG_SHIELDSPELL:// [(Casterï¿½s Base Level x 4) + (Shield MDEF x 100) + (Casterï¿½s INT x 2)] %
 						if( sd ) { 
 							skillratio = status_get_lv(src) * 4 + sd->bonus.shieldmdef * 100 + status_get_int(src) * 2;
 						} else
@@ -3582,7 +3583,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 50 * skill_lv;
 						break;
 					case WM_REVERBERATION_MAGIC:
-						// MATK [{(Skill Level x 100) + 100} x Caster’s Base Level / 100] %
+						// MATK [{(Skill Level x 100) + 100} x Casterï¿½s Base Level / 100] %
 						skillratio += 100 * (sd ? pc_checkskill(sd, WM_REVERBERATION) : 1);
 						RE_LVL_DMOD(100);
 						break;
@@ -3866,7 +3867,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 }
 
 /*==========================================
- * ‚»‚Ì‘¼ƒ_??[ƒWŒvŽZ
+ * ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½_??[ï¿½Wï¿½vï¿½Z
  *------------------------------------------*/
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
 {
@@ -4051,7 +4052,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = 100 + 200 * skill_lv + sstatus->int_;
 		break;
 	case GN_HELLS_PLANT_ATK:
-		//[{( Hell Plant Skill Level x Caster’s Base Level ) x 10 } + {( Caster’s INT x 7 ) / 2 } x { 18 + ( Caster’s Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
+		//[{( Hell Plant Skill Level x Casterï¿½s Base Level ) x 10 } + {( Casterï¿½s INT x 7 ) / 2 } x { 18 + ( Casterï¿½s Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
 		md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( sstatus->int_ * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - (sd?pc_checkskill(sd,AM_CANNIBALIZE):0)) ); 
 		break;
 	}
@@ -4179,7 +4180,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	return md;
 }
 /*==========================================
- * ƒ_??[ƒWŒvŽZˆêŠ‡?ˆ—?—p
+ * ï¿½_??[ï¿½Wï¿½vï¿½Zï¿½êŠ‡?ï¿½ï¿½?ï¿½p
  *------------------------------------------*/
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count)
 {
@@ -4219,7 +4220,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 		rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
 		if( rdamage > max_damage ) rdamage = max_damage;
 	}else if( sc && sc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 ){
-		//ATK [{(Target’s HP / 100) x Skill Level} x Caster’s Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
+		//ATK [{(Targetï¿½s HP / 100) x Skill Level} x Casterï¿½s Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
 		int ratio = (status_get_hp(src) / 100) * sc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(bl) / 125;
 		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
 		rdamage = rdamage * ratio / 100 + (*dmg) * (10 + sc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
@@ -4344,7 +4345,7 @@ int battle_damage_area( struct block_list *bl, va_list ap) {
 	return 0;
 }
 /*==========================================
- * ’Ê??UŒ‚?ˆ—?‚Ü‚Æ‚ß
+ * ï¿½ï¿½??Uï¿½ï¿½?ï¿½ï¿½?ï¿½Ü‚Æ‚ï¿½
  *------------------------------------------*/
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
@@ -5015,7 +5016,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	return (flag&state)?1:-1;
 }
 /*==========================================
- * ŽË’ö”»’è
+ * ï¿½Ë’ï¿½ï¿½
  *------------------------------------------*/
 bool battle_check_range(struct block_list *src, struct block_list *bl, int range)
 {
